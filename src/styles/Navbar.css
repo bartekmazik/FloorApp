@@ -1,0 +1,18 @@
+.Navbar {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  outline: 2px solid black;
+  height: 100px;
+}
+.Logo {
+  display: flex;
+  justify-content: center;
+  padding-top: 10px;
+  font: 2rem "Fira Sans", sans-serif;
+}
+.Menu {
+  display: flex;
+  justify-content: space-around;
+  font: 1.5rem "Fira Sans", sans-serif;
+}

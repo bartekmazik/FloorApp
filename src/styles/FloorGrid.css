@@ -1,0 +1,10 @@
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  height: 500px;
+  align-items: flex-start;
+  align-content: flex-start;
+  outline: 3px solid black;
+  margin: 50px;
+  width: 700px;
+}
