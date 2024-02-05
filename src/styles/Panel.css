@@ -1,5 +1,5 @@
 .Panel {
   background-color: burlywood;
-  outline: 2px solid black;
-  height: 40px;
+  outline: 1px solid black;
+  text-align: center;
 }
