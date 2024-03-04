@@ -11,10 +11,12 @@ function FloorGrid() {
   let index = 0; // wystapienie panela w rzedzie (zaczyna sie potem od 1)
   let restOfPanelWidth = 0; // reszta panela do zaczynania kolejnego rzedu
   let content = "";
-  const gridWidth = 700; // wymiary pokoju
+  const gridWidth = 750; // wymiary pokoju
   const gridHeight = 500;
-
-  let [totalAreaUsed, setTotalAreaUsed] = useState(0);
+  const rowCount = Math.ceil(gridHeight / panelHeight) + 1;
+  const paneleWRzedzie = gridWidth / panelWidth;
+  const panelCount = Math.ceil(rowCount * paneleWRzedzie);
+  const totalAreaUsed = panelCount * panelHeight * panelWidth;
   function calculatePanelWidth() {
     if (gridWidth - sumWidth > panelWidth) {
       // jezeli panel wejdzie na miejsce do rzedu w calosci
@@ -74,33 +76,20 @@ function FloorGrid() {
       return `${panelHeight}px`;
     }
   }
-
-  const [listaPaneli, setListaPaneli] = useState([]);
-
-  // Example initial data
-  // Function to add a new panel to the list
-  const addPanel = () => {
-    setListaPaneli((prevList) => [...prevList, prevList.length + 1]);
-    const calculatedArea = panelWidth * panelHeight;
-    console.log(calculatedArea / 100);
-    setTotalAreaUsed(totalAreaUsed + calculatedArea);
-  };
-
-  // Function to remove a panel from the list
-  const removePanel = (index) => {
-    setListaPaneli((prevList) => prevList.filter((_, i) => i !== index));
-    const calculatedArea = panelWidth * panelHeight;
-    setTotalAreaUsed(totalAreaUsed - calculatedArea);
-  };
+  function calculatePanelWidthProperly() {}
+  function calculatePanelHeightProperly() {}
+  const [listaPaneli, setListaPaneli] = useState(panelCount);
 
   return (
     <div className="Container">
       <div className="Width">{`${gridWidth / 100} m`}</div>
       <div className="buildContent">
         <div className="Height">{`${gridHeight / 100} m`}</div>
-        <div className="grid">
-          {/* Map over the list of panels and render each one */}
-          {listaPaneli.map((panel, index) => {
+        <div
+          className="grid"
+          style={{ height: gridHeight + "px", width: gridWidth + "px" }}
+        >
+          {[...Array(listaPaneli)].map(() => {
             return (
               <Panel
                 elemWidth={calculatePanelWidth()}
@@ -112,17 +101,15 @@ function FloorGrid() {
           })}
         </div>
       </div>
-      <div className="buttons">
-        <button onClick={addPanel}>Add Panel</button>
-        {listaPaneli.length > 0 && (
-          <button onClick={() => removePanel(listaPaneli.length - 1)}>
-            Remove Last Panel
-          </button>
-        )}
+      <div style={{ fontSize: "18px", marginTop: "20px" }}>
+        Total Panel Area Needed:{" "}
+        <strong>{totalAreaUsed / 10000 + (totalAreaUsed % 10)} m</strong>
+        <strong>
+          <sup>2</sup>
+        </strong>
       </div>
       <div style={{ fontSize: "18px", marginTop: "20px" }}>
-        Total Area: <span>{totalAreaUsed / 10000 + (totalAreaUsed % 10)}</span>{" "}
-        m<sup>2</sup>
+        Total amount of panels: <strong>{panelCount}</strong>
       </div>
     </div>
   );

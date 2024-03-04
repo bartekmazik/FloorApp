@@ -1,0 +1,21 @@
+.formContainer {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  row-gap: 15px;
+  align-items: center;
+  text-align: center;
+}
+.submitButton {
+  display: inline-block;
+  height: 30px;
+  width: 100px;
+  cursor: pointer;
+  margin: 15px 7px 0px;
+  background-color: white;
+  font-size: 15px;
+  color: black;
+  outline: 2px solid black;
+  text-decoration: none;
+  top: auto;
+}

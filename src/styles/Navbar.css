@@ -1,5 +1,6 @@
 .Navbar {
-  display: flex;
+  position: sticky;
+  top: 20px;
   width: 100%;
   flex-direction: column;
   gap: 20px;
@@ -7,21 +8,28 @@
   height: 100px;
   background-color: white;
   margin-bottom: 50px;
+  z-index: 1;
 }
 .Logo {
   display: flex;
   justify-content: center;
-  padding-top: 10px;
-  font: 2rem "Fira Sans", sans-serif;
+  padding-top: 5px;
+  font-size: 32px;
 }
 .Menu {
   display: flex;
   justify-content: space-around;
-  font: 1.5rem "Fira Sans", sans-serif;
+  margin-top: auto;
 }
 .MenuItem {
+  width: 25%;
   font-size: 20px;
   text-decoration: none;
   border: none;
   background-color: white;
+  z-index: auto;
+  color: black;
+}
+.MenuItem:hover {
+  background-color: gainsboro;
 }

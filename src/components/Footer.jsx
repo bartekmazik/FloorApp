@@ -5,7 +5,7 @@ import { Facebook, GitHub, LinkedIn, Instagram } from "@mui/icons-material";
 function Footer() {
   return (
     <div className="FooterContainer">
-      <span>Made by maziol</span>
+      <span>Made by maziol 2023</span>
       <div className="icons">
         <Instagram />
         <Facebook />
