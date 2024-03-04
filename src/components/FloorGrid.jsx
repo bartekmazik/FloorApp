@@ -3,99 +3,74 @@ import "../styles/FloorGrid.css";
 import Panel from "./Panel";
 
 function FloorGrid() {
-  const Width = 80; //poczatkowa dlugosc panela
-  let panelWidth = Width; // zmienna dlugosc panela
-  let panelHeight = 40; // jak wyzej
-  let sumWidth = 0;
-  let sumHeight = 0;
-  let index = 0; // wystapienie panela w rzedzie (zaczyna sie potem od 1)
-  let restOfPanelWidth = 0; // reszta panela do zaczynania kolejnego rzedu
+  const Width = 80; // initial width of a panel
+  const Height = 40; // initial height of a panel
+  const roomWidth = 543;
+  const roomHeight = 721;
+  const panelsInColumn = Math.ceil(roomHeight / Height);
+  const panelsInRow = Math.ceil(roomWidth / Width);
+  const panelCount = Math.ceil(panelsInColumn * panelsInRow);
+  const totalAreaUsed = panelCount * Height * Width;
+  const rest =
+    roomWidth - Width * (panelsInRow - 2) - (Width - (roomWidth % Width));
+  let indexX = 1; // panel position in a row
+  let indexY = 1; // panel position in a column
   let content = "";
-  const gridWidth = 750; // wymiary pokoju
-  const gridHeight = 500;
-  const rowCount = Math.ceil(gridHeight / panelHeight) + 1;
-  const paneleWRzedzie = gridWidth / panelWidth;
-  const panelCount = Math.ceil(rowCount * paneleWRzedzie);
-  const totalAreaUsed = panelCount * panelHeight * panelWidth;
-  function calculatePanelWidth() {
-    if (gridWidth - sumWidth > panelWidth) {
-      // jezeli panel wejdzie na miejsce do rzedu w calosci
-      if (index > 0) {
-        //sprawdzanie czy to pierwszy panel
-        content = "-";
-        index += 1;
-        panelWidth = Width;
-        restOfPanelWidth = 0;
-        sumWidth += panelWidth;
-        return `${panelWidth}px`;
+  function calculatePanelWidthProperly() {
+    if (indexY % 2 == 1) {
+      //indexY defines pattern of a row
+      if (indexX == panelsInRow) {
+        //defines if its a last panel in a row
+        indexX = 1;
+        indexY += 1;
+        return roomWidth % Width;
+      } else if (indexX == 1) {
+        //defines if its a first panel in a row
+        indexX += 1;
+        return Width;
       } else {
-        //jezeli to pierwszy panel
-        if (restOfPanelWidth > 0) {
-          //jezeli zaczynamy od resztki
-          content = "";
-          index += 1;
-          sumWidth += restOfPanelWidth;
-          panelWidth = restOfPanelWidth;
-          restOfPanelWidth = 0;
-        } else {
-          //jezeli zaczynamy od calego panela
-          content = "-";
-          index += 1;
-          panelWidth = Width;
-          sumWidth += panelWidth;
-        }
-        return `${panelWidth}px`;
+        //default
+        indexX += 1;
+        return Width;
       }
     } else {
-      //jezeli panel nie ma wystarczajaco miejsca (koniec rzedu)
-      content = "";
-      panelWidth = gridWidth - sumWidth;
-      sumWidth = 0;
-      restOfPanelWidth = 80 - panelWidth;
-      index = 0;
-      return `${panelWidth}px`;
+      if (indexX == panelsInRow) {
+        indexX = 1;
+        indexY += 1;
+        return rest;
+      } else if (indexX == 1) {
+        indexX += 1;
+        return Width - (roomWidth % Width);
+      } else {
+        indexX += 1;
+        return Width;
+      }
     }
   }
-  function calculatePanelHeight() {
-    if (index == 1) {
-      //jezeli to pierwszy panel w rzedzie
-      if (gridHeight - sumHeight >= panelHeight) {
-        // jezeli to nie ostatni rzad
-        sumHeight += panelHeight;
-        return `${panelHeight}px`;
-      }
-      //jezeli to ostatni rzad
-      else {
-        content = "";
-        //jezeli to ostatni rzad
-        panelHeight = gridHeight - sumHeight;
-        return `${panelHeight}px`;
-      }
+  function calculatePanelHeightProperly() {
+    if (indexY == panelsInColumn) {
+      return roomHeight % Height;
     } else {
-      //jezeli to nie pierwszy panel w rzedzie
-      return `${panelHeight}px`;
+      return Height;
     }
   }
-  function calculatePanelWidthProperly() {}
-  function calculatePanelHeightProperly() {}
   const [listaPaneli, setListaPaneli] = useState(panelCount);
 
   return (
     <div className="Container">
-      <div className="Width">{`${gridWidth / 100} m`}</div>
+      <div className="Width">{`${roomWidth / 100} m`}</div>
       <div className="buildContent">
-        <div className="Height">{`${gridHeight / 100} m`}</div>
+        <div className="Height">{`${roomHeight / 100} m`}</div>
         <div
           className="grid"
-          style={{ height: gridHeight + "px", width: gridWidth + "px" }}
+          style={{ height: roomHeight + "px", width: roomWidth + "px" }}
         >
           {[...Array(listaPaneli)].map(() => {
             return (
               <Panel
-                elemWidth={calculatePanelWidth()}
-                elemHeight={calculatePanelHeight()}
+                elemHeight={calculatePanelHeightProperly()}
+                elemWidth={calculatePanelWidthProperly()}
                 content={content}
-                key={index}
               ></Panel>
             );
           })}
