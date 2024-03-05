@@ -5,7 +5,7 @@ import Panel from "./Panel";
 function FloorGrid() {
   const Width = 80; // initial width of a panel
   const Height = 40; // initial height of a panel
-  const roomWidth = 543;
+  const roomWidth = 933;
   const roomHeight = 721;
   const panelsInColumn = Math.ceil(roomHeight / Height);
   const panelsInRow = Math.ceil(roomWidth / Width);
