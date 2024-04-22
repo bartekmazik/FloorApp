@@ -4,6 +4,7 @@
   margin: 0 auto;
   overflow: hidden;
   max-width: 500px;
+  max-height: 300px;
   z-index: -1;
   outline: 2px solid black;
 }
@@ -13,7 +14,7 @@
 }
 .slide {
   display: inline-block;
-  height: 400px;
+  height: 20rem;
   width: 100%;
 }
 .slideshowDots {

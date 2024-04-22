@@ -4,7 +4,7 @@ const Panel = ({ elemWidth, elemHeight, content }) => {
   return (
     <div
       className="Panel"
-      style={{ width: `${elemWidth / 20}rem`, height: `${elemHeight / 20}rem` }}
+      style={{ width: `${elemWidth}px`, height: `${elemHeight}px` }}
     >
       {content}
     </div>

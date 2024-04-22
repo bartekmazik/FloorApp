@@ -1,18 +1,19 @@
 .Navbar {
   position: sticky;
-  top: 0px;
-  width: 100%;
+  top: 0;
+  width: 100vw;
   flex-direction: column;
-  gap: 20px;
+  gap: 2rem;
   border: 2px solid black;
-  height: 100px;
+  height: 6rem;
   background-color: white;
-  margin-bottom: 50px;
+  margin-bottom: 2rem;
   z-index: 1;
 }
 .Logo {
   display: flex;
   justify-content: center;
+  align-items: center;
   padding-top: 5px;
   font-size: 32px;
 }

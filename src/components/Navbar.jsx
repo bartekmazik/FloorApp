@@ -16,9 +16,6 @@ const Navbar = () => {
         <Link to="/about" className="MenuItem">
           About
         </Link>
-        <Link to="/contact" className="MenuItem">
-          Contact
-        </Link>
       </div>
     </div>
   );

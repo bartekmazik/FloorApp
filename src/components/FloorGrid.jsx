@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 import "../styles/FloorGrid.css";
 import Panel from "./Panel";
 
-function FloorGrid() {
-  const Width = 80; // initial width of a panel
-  const Height = 40; // initial height of a panel
-  const roomWidth = 933;
-  const roomHeight = 721;
+function FloorGrid(props) {
+  const Width = props.panelWidth;
+  const Height = props.panelHeight;
+  const roomWidth = props.roomWidth * 100;
+  const roomHeight = props.roomHeight * 100;
   const panelsInColumn = Math.ceil(roomHeight / Height);
   const panelsInRow = Math.ceil(roomWidth / Width);
   const panelCount = Math.ceil(panelsInColumn * panelsInRow);
@@ -16,39 +16,50 @@ function FloorGrid() {
   let indexX = 1; // panel position in a row
   let indexY = 1; // panel position in a column
   let content = "";
+
   function calculatePanelWidthProperly() {
-    if (indexY % 2 == 1) {
-      //indexY defines pattern of a row
-      if (indexX == panelsInRow) {
-        //defines if its a last panel in a row
+    if (indexY % 2 === 1) {
+      // Odd row
+      if (indexX === panelsInRow) {
+        // Last panel in the row
         indexX = 1;
         indexY += 1;
         return roomWidth % Width;
-      } else if (indexX == 1) {
-        //defines if its a first panel in a row
+      } else if (indexX === 1) {
+        // First panel in the row
         indexX += 1;
         return Width;
       } else {
-        //default
+        // Default case
         indexX += 1;
         return Width;
       }
     } else {
-      if (indexX == panelsInRow) {
+      // Even row
+      if (indexX === panelsInRow && roomWidth % Width !== 0) {
+        // Last panel in an even row with uneven room width
         indexX = 1;
         indexY += 1;
-        return rest;
-      } else if (indexX == 1) {
+        return roomWidth % Width;
+      } else if (indexX === panelsInRow) {
+        // Last panel in an even row with even room width
+        indexX = 1;
+        indexY += 1;
+        return Width;
+      } else if (indexX === 1) {
+        // First panel in the row
         indexX += 1;
         return Width - (roomWidth % Width);
       } else {
+        // Default case
         indexX += 1;
         return Width;
       }
     }
   }
+
   function calculatePanelHeightProperly() {
-    if (indexY == panelsInColumn) {
+    if (indexY === panelsInColumn && roomHeight % Height !== 0) {
       return roomHeight % Height;
     } else {
       return Height;
@@ -65,12 +76,13 @@ function FloorGrid() {
           className="grid"
           style={{ height: roomHeight + "px", width: roomWidth + "px" }}
         >
-          {[...Array(listaPaneli)].map(() => {
+          {[...Array(listaPaneli)].map((i) => {
             return (
               <Panel
                 elemHeight={calculatePanelHeightProperly()}
                 elemWidth={calculatePanelWidthProperly()}
                 content={content}
+                key={i}
               ></Panel>
             );
           })}
